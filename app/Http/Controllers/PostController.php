@@ -7,12 +7,6 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    private $posts = [
-        'Title A',
-        'Title B',
-        'Title C',
-    ];
-
     /**
      * Display a listing of the resource.
      *
@@ -20,8 +14,10 @@ class PostController extends Controller
      */
     public function index()
     {
+        $posts=Post::latest()->get();
+
         return view('index')
-        ->with(['posts' => $this->posts]);
+        ->with(['posts' => $posts]);
     }
 
     /**
@@ -51,10 +47,10 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Post $post)
     {
         return view('posts.show')
-            ->with(['post'=>$this->posts[$id]]);
+            ->with(['post'=>$post]);
     }
 
     /**
